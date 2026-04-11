@@ -1,130 +1,103 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Implementação de Classes e Objetos</title>
-
-  <link rel="stylesheet" href="css/bootstrap.css" />
-
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #fff;
-      color: #2f3437;
-    }
-
-    .notion-page {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
-
-    h1 {
-      font-size: 2.4rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      font-size: 1.6rem;
-      margin-top: 40px;
-      margin-bottom: 10px;
-    }
-
-    p {
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-
-    pre {
-      background: #f7f6f3;
-      padding: 16px;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      overflow-x: auto;
-    }
-
-    .subtitle {
-      color: #6b6f76;
-      margin-bottom: 30px;
-    }
-
-    /* acessibilidade */
-    .sr-only {
-      position: absolute;
-      left: -9999px;
-    }
-
-    .sr-only-focusable:focus {
-      left: 10px;
-      top: 10px;
-      background: black;
-      color: white;
-      padding: 6px;
-      z-index: 1000;
-    }
-  </style>
-</head>
-
 <body>
+  <header role="banner">
+    <h1 id="page-title">06. Implementação de Classes e Objetos</h1>
+  </header>
 
-  <!-- Skip link -->
-  <a href="#conteudo" class="sr-only sr-only-focusable">
-    Pular para o conteúdo principal
-  </a>
+  <main role="main" aria-labelledby="page-title">
 
-  <!-- Conteúdo principal -->
-  <main id="conteudo" class="notion-page">
-
-    <header>
-      <h1>Implementação de Classes e Objetos em Java</h1>
-      <p class="subtitle">Aula 06 — Programação Orientada a Objetos</p>
-    </header>
-
-    <section aria-labelledby="intro">
-      <h2 id="intro">Introdução</h2>
+    <section aria-labelledby="sec-intro">
+      <h2 id="sec-intro">Como instanciar um objeto em Java</h2>
       <p>
-        Nesta aula, implementamos os conceitos fundamentais de orientação a objetos utilizando Java.
+        Quando você cria uma classe em Java, ela por si só <strong>não executa nada</strong>.
+        Para utilizá-la, é necessário criar um objeto a partir dela (instanciação).
       </p>
     </section>
 
-    <section aria-labelledby="classe">
-      <h2 id="classe">Definição de Classe</h2>
-      <p>
-        Uma classe define atributos e comportamentos de um objeto.
-      </p>
+    <section aria-labelledby="sec-classe">
+      <h2 id="sec-classe">1. Criando uma classe simples</h2>
 
-      <pre aria-label="Código Java de definição de classe">
-class Pessoa {
+      <p>Arquivo:</p>
+
+      <pre><code aria-label="Nome do arquivo Java">Pessoa.java</code></pre>
+
+      <p>Conteúdo:</p>
+
+      <pre><code class="language-java" aria-label="Classe Pessoa em Java">
+public class Pessoa {
+
     String nome;
     int idade;
+    String curso;
+
+    void apresentar() {
+        System.out.println("Olá, meu nome é " + nome);
+        System.out.println("Minha idade é " + idade);
+        System.out.println("Meu curso é " + curso);
+    }
 }
-      </pre>
+      </code></pre>
     </section>
 
-    <section aria-labelledby="objeto">
-      <h2 id="objeto">Criação de Objetos</h2>
-      <p>
-        Objetos são instâncias de classes.
-      </p>
+    <section aria-labelledby="sec-main">
+      <h2 id="sec-main">2. Programa principal</h2>
 
-      <pre aria-label="Código Java de criação de objeto">
-Pessoa p = new Pessoa();
-p.nome = "João";
-      </pre>
+      <pre><code aria-label="Arquivo principal">Main.java</code></pre>
+
+      <pre><code class="language-java" aria-label="Classe principal em Java">
+public class Main {
+    public static void main(String[] args) {
+
+        Pessoa p1 = new Pessoa();
+
+        p1.nome = "Carlos";
+        p1.idade = 17;
+        p1.curso = "Técnico em Informática";
+
+        p1.apresentar();
+    }
+}
+      </code></pre>
     </section>
 
-    <nav aria-label="Navegação da aula">
-      <h2>Navegação</h2>
+    <section aria-labelledby="sec-instanciacao">
+      <h2 id="sec-instanciacao">3. Entendendo a instanciação</h2>
+
+      <pre><code class="language-java" aria-label="Instanciação de objeto">
+Pessoa p1 = new Pessoa();
+      </code></pre>
+
       <ul>
-        <li><a href="ds.html">Voltar para lista de aulas</a></li>
+        <li><code>Pessoa</code>: tipo</li>
+        <li><code>p1</code>: variável</li>
+        <li><code>new Pessoa()</code>: instanciação</li>
       </ul>
-    </nav>
+    </section>
+
+    <section aria-labelledby="sec-acesso">
+      <h2 id="sec-acesso">4. Acessando o objeto</h2>
+
+      <h3>Atribuição de valores</h3>
+      <pre><code class="language-java">
+p1.nome = "Carlos";
+p1.idade = 17;
+p1.curso = "Técnico em Informática";
+      </code></pre>
+
+      <h3>Chamada de método</h3>
+      <pre><code class="language-java">
+p1.apresentar();
+      </code></pre>
+    </section>
+
+    <section aria-labelledby="sec-fluxo">
+      <h2 id="sec-fluxo">5. Fluxo completo</h2>
+      <ol>
+        <li>Criar a classe</li>
+        <li>Criar o Main</li>
+        <li>Instanciar objeto</li>
+        <li>Utilizar objeto</li>
+      </ol>
+    </section>
 
   </main>
-
 </body>
-</html>
