@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Modelo Lógico de Banco de Dados</title>
+</head>
+<body>
+
+<main role="main" aria-labelledby="titulo">
+
+  <h1 id="titulo">Modelo lógico de banco de dados</h1>
+
+  <p>
+    Este modelo descreve as entidades Vendedor, Cliente, Pedido, Peça, Depósito
+    e a entidade associativa Pedido_Peça, incluindo seus atributos e relacionamentos.
+  </p>
+
+  <!-- VENDEDOR -->
+  <section aria-labelledby="vendedor">
+    <h2 id="vendedor">Entidade Vendedor</h2>
+    <dl>
+      <dt>Código do vendedor</dt>
+      <dd>Chave primária, número com 5 dígitos</dd>
+
+      <dt>Nome do vendedor</dt>
+      <dd>Texto de até 50 caracteres</dd>
+
+      <dt>Endereço</dt>
+      <dd>Texto de até 50 caracteres</dd>
+
+      <dt>Percentual de comissão</dt>
+      <dd>Número com 2 dígitos e 1 casa decimal</dd>
+    </dl>
+  </section>
+
+  <!-- CLIENTE -->
+  <section aria-labelledby="cliente">
+    <h2 id="cliente">Entidade Cliente</h2>
+    <dl>
+      <dt>Código do cliente</dt>
+      <dd>Chave primária, número com 5 dígitos</dd>
+
+      <dt>Nome do cliente</dt>
+      <dd>Texto de até 50 caracteres</dd>
+
+      <dt>Endereço do cliente</dt>
+      <dd>Texto de até 50 caracteres</dd>
+
+      <dt>Limite de crédito</dt>
+      <dd>Número com 9 dígitos e 2 casas decimais</dd>
+
+      <dt>Faturamento acumulado</dt>
+      <dd>Número com 9 dígitos e 2 casas decimais</dd>
+    </dl>
+  </section>
+
+  <!-- PEDIDO -->
+  <section aria-labelledby="pedido">
+    <h2 id="pedido">Entidade Pedido</h2>
+    <dl>
+      <dt>Código do pedido</dt>
+      <dd>Chave primária</dd>
+
+      <dt>Código do cliente</dt>
+      <dd>Chave estrangeira referenciando Cliente</dd>
+
+      <dt>Código do vendedor</dt>
+      <dd>Chave estrangeira referenciando Vendedor</dd>
+
+      <dt>Data do pedido</dt>
+      <dd>Tipo data</dd>
+    </dl>
+  </section>
+
+  <!-- PEÇA -->
+  <section aria-labelledby="peca">
+    <h2 id="peca">Entidade Peça</h2>
+    <dl>
+      <dt>Código da peça</dt>
+      <dd>Chave primária</dd>
+
+      <dt>Preço unitário</dt>
+      <dd>Número com 9 dígitos e 2 casas decimais</dd>
+
+      <dt>Descrição</dt>
+      <dd>Texto de até 50 caracteres</dd>
+
+      <dt>Quantidade em estoque</dt>
+      <dd>Número com 5 dígitos</dd>
+
+      <dt>Código do depósito</dt>
+      <dd>Chave estrangeira referenciando Depósito</dd>
+    </dl>
+  </section>
+
+  <!-- DEPÓSITO -->
+  <section aria-labelledby="deposito">
+    <h2 id="deposito">Entidade Depósito</h2>
+    <dl>
+      <dt>Código do depósito</dt>
+      <dd>Chave primária</dd>
+
+      <dt>Endereço do depósito</dt>
+      <dd>Texto de até 50 caracteres</dd>
+    </dl>
+  </section>
+
+  <!-- PEDIDO_PECA -->
+  <section aria-labelledby="pedido-peca">
+    <h2 id="pedido-peca">Entidade Pedido_Peça</h2>
+    <p>Representa os itens de um pedido.</p>
+
+    <dl>
+      <dt>Código do pedido</dt>
+      <dd>Parte da chave primária composta e chave estrangeira</dd>
+
+      <dt>Código da peça</dt>
+      <dd>Parte da chave primária composta e chave estrangeira</dd>
+
+      <dt>Quantidade solicitada</dt>
+      <dd>Número com 5 dígitos</dd>
+
+      <dt>Preço cotado</dt>
+      <dd>Número com 9 dígitos e 2 casas decimais</dd>
+    </dl>
+  </section>
+
+  <!-- RELACIONAMENTOS -->
+  <section aria-labelledby="relacionamentos">
+    <h2 id="relacionamentos">Relacionamentos</h2>
+    <ul>
+      <li>Um vendedor pode estar associado a vários pedidos.</li>
+      <li>Cada pedido possui exatamente um vendedor.</li>
+      <li>Um cliente pode realizar vários pedidos.</li>
+      <li>Cada pedido pertence a um único cliente.</li>
+      <li>Um pedido contém vários itens.</li>
+      <li>Cada item está ligado a uma peça.</li>
+      <li>Uma peça pode aparecer em vários pedidos.</li>
+      <li>Um depósito pode armazenar várias peças.</li>
+    </ul>
+  </section>
+
+</main>
+
+</body>
+</html>
