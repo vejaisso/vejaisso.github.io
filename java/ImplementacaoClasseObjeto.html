@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Implementação de Classes e Objetos</title>
+
+  <link rel="stylesheet" href="css/bootstrap.css" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* estilo tipo Notion */
+    .notion-container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .notion-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .notion-subtitle {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .notion-block {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .notion-code {
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+
+    .sr-only {
+      position: absolute;
+      left: -9999px;
+    }
+
+    .sr-only-focusable:focus {
+      left: 10px;
+      top: 10px;
+      background: #000;
+      color: #fff;
+      padding: 5px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Skip link -->
+  <a href="#conteudo" class="sr-only sr-only-focusable">
+    Pular para o conteúdo principal
+  </a>
+
+  <!-- Header -->
+  <header class="header_section px-0">
+    <nav class="navbar navbar-expand-lg" aria-label="Navegação principal">
+      <a class="navbar-brand" href="index.html">
+        Prof. Leonardo Arruda
+      </a>
+    </nav>
+  </header>
+
+  <!-- Main -->
+  <main id="conteudo" class="notion-container">
+
+    <!-- Cabeçalho estilo Notion -->
+    <header>
+      <h1 class="notion-title">
+        Implementação de Classes e Objetos em Java
+      </h1>
+
+      <p class="notion-subtitle">
+        Aula 06 — Programação Orientada a Objetos
+      </p>
+    </header>
+
+    <!-- Conteúdo -->
+    <section aria-labelledby="sec-intro">
+
+      <h2 id="sec-intro">Introdução</h2>
+
+      <p class="notion-block">
+        Nesta aula, vamos implementar os conceitos fundamentais de orientação a objetos utilizando a linguagem Java.
+      </p>
+
+    </section>
+
+    <section aria-labelledby="sec-classes">
+
+      <h2 id="sec-classes">Definição de Classe</h2>
+
+      <p class="notion-block">
+        Uma classe é uma estrutura que define atributos e comportamentos de um objeto.
+      </p>
+
+      <pre class="notion-code" aria-label="Exemplo de código Java">
+class Pessoa {
+    String nome;
+    int idade;
+}
+      </pre>
+
+    </section>
+
+    <section aria-labelledby="sec-objetos">
+
+      <h2 id="sec-objetos">Criação de Objetos</h2>
+
+      <p class="notion-block">
+        Objetos são instâncias de uma classe.
+      </p>
+
+      <pre class="notion-code" aria-label="Exemplo de criação de objeto">
+Pessoa p = new Pessoa();
+p.nome = "João";
+      </pre>
+
+    </section>
+
+    <!-- Navegação -->
+    <nav aria-label="Navegação da aula">
+
+      <h2>Navegação</h2>
+
+      <ul>
+        <li>
+          <a href="ds.html">
+            Voltar para lista de aulas
+          </a>
+        </li>
+      </ul>
+
+    </nav>
+
+  </main>
+
+</body>
+</html>
