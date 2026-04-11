@@ -1,126 +1,150 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 
 <head>
   <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <link rel="icon" href="images/fevicon.png" type="image/gif" />
-  <meta name="color-scheme" content="light">
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="Leonardo Arruda" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Prof. Leonardo Arruda</title>
+  <title>Desenvolvimento de Sistemas</title>
 
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet" />
-  <link href="css/font-awesome.min.css" rel="stylesheet" />
-  <link href="css/style.css" rel="stylesheet" />
-  <link href="css/responsive.css" rel="stylesheet" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
+
+  <!-- Skip link -->
+  <a href="#conteudo" class="sr-only sr-only-focusable">
+    Pular para o conteúdo principal
+  </a>
+
+  <!-- HEADER -->
   <header class="header_section long_section px-0">
-    <nav class="navbar navbar-expand-lg custom_nav-container ">
+    <nav class="navbar navbar-expand-lg custom_nav-container"
+         aria-label="Navegação principal">
       <a class="navbar-brand" href="index.html">
-        <span class="navbar-brand">
-          Prof. Leonardo Arruda
-        </span>
+        <span>Prof. Leonardo Arruda</span>
       </a>
     </nav>
   </header>
-  <div class="divider">
-  </div>
 
-  <section class="table_section container">
-    <p></p>
-    <h2 class="text-center mb-2">Desenvolvimento de Sistemas</h2></p>
-    <h4 class="text-center mb-2"><p>Cronograma e Material Didático</h4></p>
-    <p></p>
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped text-left">
-        <thead class="thead-dark">
-          <tr>
-            <th>Aula</th>
-            <th>Título</th>
-            <th>Material Online</th>
-            <th>Atividade Complementar</th>
-            <th>Atividade Prática</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>01</td>
-            <td>Introdução a Linguagem de Programação Java - Lista 1</td>
-            <td><a target="_blank"
-                href="  https://leoarruda.notion.site/Introdu-o-a-programa-o-Java-30def7c01d61807db3d4d34bcfd61642">Acessar</a>
-            </td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td>02</td>
-            <td>Introdução a Linguagem de Programação Java - Lista 2</td>
-            <td><a target="_blank"
-                href="https://leoarruda.notion.site/Introdu-o-a-programa-o-Java-Lista-2-314ef7c01d618019be65fa30a0381bb4?pvs=73">Acessar</a>
-            </td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td>03</td>
-            <td>Estruturas de Condição em Java</td>
-            <td><a target="_blank"
-                href="https://leoarruda.notion.site/Estruturas-Condicionais-em-Java-if-else-else-if-switch-322ef7c01d6180ca8cdafa63c568d5a8">Acessar</a>
-            </td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td>04</td>
-            <td>Estruturas de Repetição em Java</td>
-            <td><a target="_blank"
-                href="https://leoarruda.notion.site/04-Estruturas-de-Repeti-o-em-Java-while-for-329ef7c01d61801abaf4c53796cf6f3b">Acessar</a>
-            </td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td>05</td>
-            <td>Introdução a programação orientada a objetos</td>
-            <td><a target="_blank"
-                href="https://leoarruda.notion.site/05-Introdu-o-a-programa-o-orientada-a-objetos-32eef7c01d6180afbe0bd931cfe5792a">Acessar</a>
-            </td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td>06</td>
-            <td>Implementação da orientação a objetos em Java</td>
-            <td><a target="_blank"
-                href="https://leoarruda.notion.site/06-Implementa-o-de-Classes-e-Objetos-33bef7c01d618012a5a5c0525c503e7a">Acessar</a>
-            </td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-        </tbody>
-      </table>      
-    </div>
+  <div class="divider"></div>
 
-  </section>
+  <!-- MAIN -->
+  <main id="conteudo" class="container">
 
-  <!-- bootstrap js -->
-  <script src="js/bootstrap.js"></script>
-  <!-- custom js -->
-  <script src="js/custom.js"></script>
+    <section class="table_section">
+
+      <header class="text-center mb-3">
+        <h1>Desenvolvimento de Sistemas</h1>
+        <p>Cronograma e Material Didático</p>
+      </header>
+
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped text-left">
+
+          <caption class="sr-only">
+            Cronograma de aulas com materiais e atividades
+          </caption>
+
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Aula</th>
+              <th scope="col">Título</th>
+              <th scope="col">Material Online</th>
+              <th scope="col">Atividade Complementar</th>
+              <th scope="col">Atividade Prática</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <th scope="row">01</th>
+              <td>Introdução à Linguagem Java - Lista 1</td>
+              <td>
+                <a href="https://leoarruda.notion.site/Introdu-o-a-programa-o-Java-30def7c01d61807db3d4d34bcfd61642"
+                   target="_blank" rel="noopener noreferrer">
+                  Acessar aula 1
+                </a>
+              </td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+
+            <tr>
+              <th scope="row">02</th>
+              <td>Introdução à Linguagem Java - Lista 2</td>
+              <td>
+                <a href="https://leoarruda.notion.site/Introdu-o-a-programa-o-Java-Lista-2-314ef7c01d618019be65fa30a0381bb4"
+                   target="_blank" rel="noopener noreferrer">
+                  Acessar aula 2
+                </a>
+              </td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+
+            <tr>
+              <th scope="row">03</th>
+              <td>Estruturas de Condição em Java</td>
+              <td>
+                <a href="https://leoarruda.notion.site/Estruturas-Condicionais-em-Java-if-else-else-if-switch-322ef7c01d6180ca8cdafa63c568d5a8"
+                   target="_blank" rel="noopener noreferrer">
+                  Acessar aula 3 
+                </a>
+              </td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+
+            <tr>
+              <th scope="row">04</th>
+              <td>Estruturas de Repetição em Java</td>
+              <td>
+                <a href="https://leoarruda.notion.site/04-Estruturas-de-Repeti-o-em-Java-while-for-329ef7c01d61801abaf4c53796cf6f3b"
+                   target="_blank" rel="noopener noreferrer">
+                  Acessar aula 4 
+                </a>
+              </td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+
+            <tr>
+              <th scope="row">05</th>
+              <td>Introdução à Programação Orientada a Objetos</td>
+              <td>
+                <a href="https://leoarruda.notion.site/05-Introdu-o-a-programa-o-orientada-a-objetos-32eef7c01d6180afbe0bd931cfe5792a"
+                   target="_blank" rel="noopener noreferrer">
+                  Acessar aula 5 
+                </a>
+              </td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+
+            <tr>
+              <th scope="row">06</th>
+              <td>Implementação de Classes e Objetos em Java</td>
+              <td>
+                <a href="https://leoarruda.notion.site/06-Implementa-o-de-Classes-e-Objetos-33bef7c01d618012a5a5c0525c503e7a"
+                   target="_blank" rel="noopener noreferrer">
+                  Acessar aula 6 
+                </a>
+              </td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+      </div>
+
+    </section>
+
+  </main>
+
 </body>
-
 </html>
-
-
-
-
-
