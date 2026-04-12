@@ -124,9 +124,10 @@ function renderHome() {
         <div class="home-subtitle">Ambiente de aprendizagem</div>
       </div>
       <section class="home-section">
-        <h3>Perfil acadêmico</h3>
+        <!-- <h3>Perfil acadêmico</h3>
         <p>Engenheiro e pesquisador, desenvolve projetos interseccionando acessibilidade, cognição musical, criatividade computacional, síntese sonora, interface humano-computador, programação musical e composição interativa. Mestre pelo Instituto de Artes - IA/Unicamp com ênfase em Música, Linguagem e Sonologia, sob orientação de José Eduardo Fornari Novo Junior, com financiamento CAPES-FAPESP. Possui especialização em Processos Didático-Pedagógicos para Cursos na Modalidade a Distância pela Universidade Virtual do Estado de São Paulo (UNIVESP) e Bacharel em Engenharia de Computação pelo Centro Universitário Sagrado Coração USC (2018). Atua em pesquisas pelo Núcleo Interdisciplinar de Comunicação Sonora (NICS) e integra o grupo de pesquisa Coletivo de Comunicação, Cognição e Computação (C4), registrado no CNPq. A produção acadêmica e artística articula música, tecnologia e inclusão, explorando musicalidade, percepção sonora e estética em projetos com tecnologia assistiva para tornar a experiência musical acessível.</p>
-      </section>
+        -->
+        </section>
     </div>
   `;
   dynamicContainer.innerHTML = homeHTML;
