@@ -1,2 +1,2 @@
-# Material Didático para o curso de Desenvolvimento de Sistemas
-Todos os direitos reservados (2025)
+# Leonardo Arruda
+Todos os direitos reservados (2026)
