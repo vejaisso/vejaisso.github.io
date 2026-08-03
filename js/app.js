@@ -1,3 +1,8 @@
+// ================= IMPORTAÇÕES DOS MÓDULOS FIREBASE =================
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs, doc, getDoc, query, where, orderBy } from 'firebase/firestore';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
+
 // ================= CONFIGURAÇÃO DO FIREBASE =================
 const firebaseConfig = {
   apiKey: "AIzaSyD3JXXQrzqessm7zGL6Ipa0Le75XNN2QjM",
@@ -8,8 +13,18 @@ const firebaseConfig = {
   appId: "1:261374908815:web:b5afc220d53494347bd3fa"
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+// Inicializa o Firebase
+const app = initializeApp(firebaseConfig);
+
+// ================= INICIALIZAÇÃO DO APP CHECK =================
+// Substitua 'SUA_SITE_KEY_AQUI' pela sua Site Key do reCAPTCHA v3
+const appCheck = initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider('SUA_SITE_KEY_AQUI'),
+  isTokenAutoRefreshEnabled: true
+});
+
+// Inicializa o Firestore
+const db = getFirestore(app);
 
 // ================= VARIÁVEIS GLOBAIS =================
 let disciplinesMap = {};
@@ -29,8 +44,9 @@ const DEFAULT_PERFIL = {
 
 async function loadPerfil() {
   try {
-    const doc = await db.collection('config').doc('perfil').get();
-    perfilCache = doc.exists ? { ...DEFAULT_PERFIL, ...doc.data() } : DEFAULT_PERFIL;
+    const docRef = doc(db, 'config', 'perfil');
+    const docSnap = await getDoc(docRef);
+    perfilCache = docSnap.exists() ? { ...DEFAULT_PERFIL, ...docSnap.data() } : DEFAULT_PERFIL;
   } catch (error) {
     console.error('Erro ao carregar perfil:', error);
     perfilCache = DEFAULT_PERFIL;
@@ -172,13 +188,12 @@ async function renderLessonsList(disciplineId) {
     dynamicContainer.innerHTML = `<div class="empty-state"><i class="fa fa-spinner fa-spin"></i><p>Carregando aulas de ${escapeHtml(disciplina.nome)}...</p></div>`;
 
     // Buscar apenas aulas disponíveis
-    const aulasSnapshot = await db.collection('aulas')
-      .where('disciplinaId', '==', disciplineId)
-      .where('disponivel', '==', true)
-      .get();
+    const aulasRef = collection(db, 'aulas');
+    const q = query(aulasRef, where('disciplinaId', '==', disciplineId), where('disponivel', '==', true));
+    const querySnapshot = await getDocs(q);
 
     const lessons = [];
-    aulasSnapshot.forEach(doc => {
+    querySnapshot.forEach(doc => {
       const data = doc.data();
       lessons.push({
         id: doc.id,
@@ -259,16 +274,18 @@ async function buildSidebar() {
     sidebarContainer.innerHTML = `<div class="empty-state"><i class="fa fa-spinner fa-spin"></i><p>Carregando disciplinas...</p></div>`;
     
     // Buscar todas as disciplinas (para depois filtrar)
-    const disciplinasSnapshot = await db.collection('disciplinas').orderBy('ordem', 'asc').get();
+    const disciplinasRef = collection(db, 'disciplinas');
+    const q = query(disciplinasRef, orderBy('ordem', 'asc'));
+    const querySnapshot = await getDocs(q);
     
-    if (disciplinasSnapshot.empty) {
+    if (querySnapshot.empty) {
       sidebarContainer.innerHTML = `<div class="empty-state"><i class="fa fa-exclamation-triangle"></i><p>Nenhuma disciplina cadastrada.</p></div>`;
       return;
     }
 
     const categoriesMap = new Map();
     
-    disciplinasSnapshot.forEach(doc => {
+    querySnapshot.forEach(doc => {
       const data = doc.data();
       
       // Verificar disponibilidade (tratando diferentes tipos)
