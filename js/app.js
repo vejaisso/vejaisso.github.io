@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 // ================= INICIALIZAÇÃO DO APP CHECK =================
 // Substitua 'SUA_SITE_KEY_AQUI' pela sua Site Key do reCAPTCHA v3
 const appCheck = initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider('SUA_SITE_KEY_AQUI'),
+  provider: new ReCaptchaV3Provider('6LfCHXQtAAAAAAJnC_ElB5oN7RtoMW3-GmYpiBnI'),
   isTokenAutoRefreshEnabled: true
 });
 
