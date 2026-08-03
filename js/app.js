@@ -13,10 +13,10 @@ firebase.initializeApp(firebaseConfig);
 
 // ================= INICIALIZAÇÃO DO APP CHECK (OPCIONAL) =================
 // Se você configurou o App Check, descomente o bloco abaixo e substitua 'SUA_SITE_KEY'
-if (typeof firebase.appCheck !== 'undefined') {
-  const appCheck = firebase.appCheck();
-  appCheck.activate('6LfCHXQtAAAAAAJnC_ElB5oN7RtoMW3-GmYpiBnI', true);
-}
+// if (typeof firebase.appCheck !== 'undefined') {
+//   const appCheck = firebase.appCheck();
+//   appCheck.activate('6LfCHXQtAAAAAAJnC_ElB5oN7RtoMW3-GmYpiBnI', true);
+// }
 
 // Inicializa o Firestore
 const db = firebase.firestore();
