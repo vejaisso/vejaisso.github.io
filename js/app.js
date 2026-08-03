@@ -8,17 +8,22 @@ const firebaseConfig = {
   appId: "1:261374908815:web:b5afc220d53494347bd3fa"
 };
 
-// Inicializa o Firebase
 firebase.initializeApp(firebaseConfig);
 
-// ================= INICIALIZAÇÃO DO APP CHECK (OPCIONAL) =================
-// Se você configurou o App Check, descomente o bloco abaixo e substitua 'SUA_SITE_KEY'
-// if (typeof firebase.appCheck !== 'undefined') {
-//   const appCheck = firebase.appCheck();
-//   appCheck.activate('6LfCHXQtAAAAAAJnC_ElB5oN7RtoMW3-GmYpiBnI', true);
-// }
+// ================= APP CHECK (DESATIVADO PARA TESTE) =================
+// Para ativar, descomente o bloco abaixo e substitua 'SUA_SITE_KEY' pela sua Site Key
+/*
+if (typeof firebase.appCheck !== 'undefined') {
+  try {
+    const appCheck = firebase.appCheck();
+    appCheck.activate('SUA_SITE_KEY', true);
+    console.log('App Check ativado');
+  } catch (e) {
+    console.warn('Erro ao ativar App Check:', e);
+  }
+}
+*/
 
-// Inicializa o Firestore
 const db = firebase.firestore();
 
 // ================= VARIÁVEIS GLOBAIS =================
