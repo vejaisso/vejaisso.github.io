@@ -1,8 +1,3 @@
-// ================= IMPORTAÇÕES DOS MÓDULOS FIREBASE =================
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, doc, getDoc, query, where, orderBy } from 'firebase/firestore';
-import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
-
 // ================= CONFIGURAÇÃO DO FIREBASE =================
 const firebaseConfig = {
   apiKey: "AIzaSyD3JXXQrzqessm7zGL6Ipa0Le75XNN2QjM",
@@ -14,17 +9,17 @@ const firebaseConfig = {
 };
 
 // Inicializa o Firebase
-const app = initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
-// ================= INICIALIZAÇÃO DO APP CHECK =================
-// Substitua 'SUA_SITE_KEY_AQUI' pela sua Site Key do reCAPTCHA v3
-const appCheck = initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider('6LfCHXQtAAAAAAJnC_ElB5oN7RtoMW3-GmYpiBnI'),
-  isTokenAutoRefreshEnabled: true
-});
+// ================= INICIALIZAÇÃO DO APP CHECK (OPCIONAL) =================
+// Se você configurou o App Check, descomente o bloco abaixo e substitua 'SUA_SITE_KEY'
+if (typeof firebase.appCheck !== 'undefined') {
+  const appCheck = firebase.appCheck();
+  appCheck.activate('6LfCHXQtAAAAAAJnC_ElB5oN7RtoMW3-GmYpiBnI', true);
+}
 
 // Inicializa o Firestore
-const db = getFirestore(app);
+const db = firebase.firestore();
 
 // ================= VARIÁVEIS GLOBAIS =================
 let disciplinesMap = {};
@@ -38,15 +33,14 @@ const DEFAULT_PERFIL = {
   nome: 'Leonardo Arruda',
   subtitulo: 'Ambiente de aprendizagem',
   tituloSecao: 'Perfil acadêmico',
-  lattes: '', 
+  lattes: '',
   bio: 'Engenheiro e pesquisador, desenvolve projetos interseccionando acessibilidade, cognição musical, criatividade computacional, síntese sonora, interface humano-computador, programação musical e composição interativa. Mestre pelo Instituto de Artes - IA/Unicamp com ênfase em Música, Linguagem e Sonologia, sob orientação de José Eduardo Fornari Novo Junior, com financiamento CAPES-FAPESP. Possui especialização em Processos Didático-Pedagógicos para Cursos na Modalidade a Distância pela Universidade Virtual do Estado de São Paulo (UNIVESP) e Bacharel em Engenharia de Computação pelo Centro Universitário Sagrado Coração USC (2018). Atua em pesquisas pelo Núcleo Interdisciplinar de Comunicação Sonora (NICS) e integra o grupo de pesquisa Coletivo de Comunicação, Cognição e Computação (C4), registrado no CNPq. A produção acadêmica e artística articula música, tecnologia e inclusão, explorando musicalidade, percepção sonora e estética em projetos com tecnologia assistiva para tornar a experiência musical acessível.'
 };
 
 async function loadPerfil() {
   try {
-    const docRef = doc(db, 'config', 'perfil');
-    const docSnap = await getDoc(docRef);
-    perfilCache = docSnap.exists() ? { ...DEFAULT_PERFIL, ...docSnap.data() } : DEFAULT_PERFIL;
+    const doc = await db.collection('config').doc('perfil').get();
+    perfilCache = doc.exists ? { ...DEFAULT_PERFIL, ...doc.data() } : DEFAULT_PERFIL;
   } catch (error) {
     console.error('Erro ao carregar perfil:', error);
     perfilCache = DEFAULT_PERFIL;
@@ -187,13 +181,13 @@ async function renderLessonsList(disciplineId) {
   try {
     dynamicContainer.innerHTML = `<div class="empty-state"><i class="fa fa-spinner fa-spin"></i><p>Carregando aulas de ${escapeHtml(disciplina.nome)}...</p></div>`;
 
-    // Buscar apenas aulas disponíveis
-    const aulasRef = collection(db, 'aulas');
-    const q = query(aulasRef, where('disciplinaId', '==', disciplineId), where('disponivel', '==', true));
-    const querySnapshot = await getDocs(q);
+    const aulasSnapshot = await db.collection('aulas')
+      .where('disciplinaId', '==', disciplineId)
+      .where('disponivel', '==', true)
+      .get();
 
     const lessons = [];
-    querySnapshot.forEach(doc => {
+    aulasSnapshot.forEach(doc => {
       const data = doc.data();
       lessons.push({
         id: doc.id,
@@ -204,7 +198,6 @@ async function renderLessonsList(disciplineId) {
       });
     });
 
-    // Ordenação ascendente (1,2,3...)
     lessons.sort((a, b) => a.ordem - b.ordem);
 
     if (lessons.length === 0) {
@@ -268,27 +261,23 @@ async function selectDiscipline(disciplineId) {
   document.getElementById('main-content')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ================= CONSTRUÇÃO DO SIDEBAR COM FILTRO DE DISPONIBILIDADE =================
+// ================= CONSTRUÇÃO DO SIDEBAR =================
 async function buildSidebar() {
   try {
     sidebarContainer.innerHTML = `<div class="empty-state"><i class="fa fa-spinner fa-spin"></i><p>Carregando disciplinas...</p></div>`;
     
-    // Buscar todas as disciplinas (para depois filtrar)
-    const disciplinasRef = collection(db, 'disciplinas');
-    const q = query(disciplinasRef, orderBy('ordem', 'asc'));
-    const querySnapshot = await getDocs(q);
+    const disciplinasSnapshot = await db.collection('disciplinas').orderBy('ordem', 'asc').get();
     
-    if (querySnapshot.empty) {
+    if (disciplinasSnapshot.empty) {
       sidebarContainer.innerHTML = `<div class="empty-state"><i class="fa fa-exclamation-triangle"></i><p>Nenhuma disciplina cadastrada.</p></div>`;
       return;
     }
 
     const categoriesMap = new Map();
     
-    querySnapshot.forEach(doc => {
+    disciplinasSnapshot.forEach(doc => {
       const data = doc.data();
       
-      // Verificar disponibilidade (tratando diferentes tipos)
       let isAvailable = false;
       if (data.hasOwnProperty('disponivel')) {
         if (typeof data.disponivel === 'boolean') {
@@ -299,12 +288,11 @@ async function buildSidebar() {
           isAvailable = data.disponivel === 1;
         }
       } else {
-        // Se o campo não existe, considerar disponível (compatibilidade)
         isAvailable = true;
         console.warn(`Disciplina ${doc.id} não tem campo 'disponivel'. Exibindo por padrão.`);
       }
       
-      if (!isAvailable) return; // Não exibir disciplinas indisponíveis
+      if (!isAvailable) return;
       
       const disciplina = {
         id: doc.id,
@@ -321,7 +309,6 @@ async function buildSidebar() {
       categoriesMap.get(disciplina.categoria).push(disciplina);
     });
     
-    // Ordenar disciplinas dentro de cada categoria
     for (let [cat, discList] of categoriesMap.entries()) {
       discList.sort((a, b) => a.ordem - b.ordem);
     }
@@ -329,7 +316,7 @@ async function buildSidebar() {
     const sortedCategories = Array.from(categoriesMap.keys()).sort();
     
     if (sortedCategories.length === 0) {
-      sidebarContainer.innerHTML = `<div class="empty-state"><i class="fa fa-exclamation-triangle"></i><p>Nenhuma disciplina disponível no momento.</p><p>Verifique se o campo 'disponivel' está true nos documentos.</p></div>`;
+      sidebarContainer.innerHTML = `<div class="empty-state"><i class="fa fa-exclamation-triangle"></i><p>Nenhuma disciplina disponível no momento.</p></div>`;
       return;
     }
     
@@ -350,7 +337,6 @@ async function buildSidebar() {
     sidebarHtml += `</div>`;
     sidebarContainer.innerHTML = sidebarHtml;
     
-    // Anexar eventos
     document.querySelectorAll('.discipline-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const discId = btn.getAttribute('data-discipline');
@@ -369,7 +355,7 @@ async function buildSidebar() {
     console.log("Sidebar carregado. Disciplinas disponíveis:", Object.keys(disciplinesMap).length);
   } catch (error) {
     console.error("Erro ao carregar disciplinas:", error);
-    sidebarContainer.innerHTML = `<div class="empty-state"><i class="fa fa-exclamation-triangle"></i><p>Erro ao carregar disciplinas. Verifique o console.</p><p>${error.message}</p></div>`;
+    sidebarContainer.innerHTML = `<div class="empty-state"><i class="fa fa-exclamation-triangle"></i><p>Erro ao carregar disciplinas: ${error.message}</p></div>`;
   }
 }
 
