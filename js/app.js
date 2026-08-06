@@ -10,8 +10,11 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-// ================= APP CHECK (DESATIVADO PARA TESTE) =================
-// Para ativar, descomente o bloco abaixo e substitua 'SUA_SITE_KEY' pela sua Site Key
+// ================= APP CHECK =================
+// Se estiver testando em localhost, gere um debug token no console do Firebase
+// (App Check > Apps > seu app > "Manage debug tokens") e descomente a linha abaixo,
+// colando o token gerado. Sem isso, o App Check vai bloquear o localhost.
+// self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
 
 if (typeof firebase.appCheck !== 'undefined') {
   try {
@@ -22,6 +25,8 @@ if (typeof firebase.appCheck !== 'undefined') {
     console.warn('Erro ao ativar App Check:', e);
   }
 }
+
+
 const db = firebase.firestore();
 
 // ================= VARIÁVEIS GLOBAIS =================
@@ -127,7 +132,13 @@ document.getElementById('toggleAriaHighlight').addEventListener('click', toggleA
 // ================= FUNÇÕES AUXILIARES =================
 function escapeHtml(str) {
   if (!str) return '';
-  return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;'));
+  return String(str).replace(/[&<>"']/g, m => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[m]));
 }
 
 function setActiveButton(disciplineId) {
@@ -186,12 +197,26 @@ async function renderLessonsList(disciplineId) {
 
     const aulasSnapshot = await db.collection('aulas')
       .where('disciplinaId', '==', disciplineId)
-      .where('disponivel', '==', true)
       .get();
 
     const lessons = [];
     aulasSnapshot.forEach(doc => {
       const data = doc.data();
+
+      let isAvailable = false;
+      if (data.hasOwnProperty('disponivel')) {
+        if (typeof data.disponivel === 'boolean') {
+          isAvailable = data.disponivel === true;
+        } else if (typeof data.disponivel === 'string') {
+          isAvailable = data.disponivel.toLowerCase() === 'true';
+        } else if (typeof data.disponivel === 'number') {
+          isAvailable = data.disponivel === 1;
+        }
+      } else {
+        isAvailable = true;
+      }
+      if (!isAvailable) return;
+
       lessons.push({
         id: doc.id,
         title: data.titulo || "Sem título",
@@ -269,7 +294,7 @@ async function buildSidebar() {
   try {
     sidebarContainer.innerHTML = `<div class="empty-state"><i class="fa fa-spinner fa-spin"></i><p>Carregando disciplinas...</p></div>`;
     
-    const disciplinasSnapshot = await db.collection('disciplinas').orderBy('ordem', 'asc').get();
+    const disciplinasSnapshot = await db.collection('disciplinas').get();
     
     if (disciplinasSnapshot.empty) {
       sidebarContainer.innerHTML = `<div class="empty-state"><i class="fa fa-exclamation-triangle"></i><p>Nenhuma disciplina cadastrada.</p></div>`;
