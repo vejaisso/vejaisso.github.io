@@ -16,7 +16,7 @@ firebase.initializeApp(firebaseConfig);
 if (typeof firebase.appCheck !== 'undefined') {
   try {
     const appCheck = firebase.appCheck();
-    appCheck.activate('SUA_SITE_KEY', true);
+    appCheck.activate('6LfCHXQtAAAAAAJnC_ElB5oN7RtoMW3-GmYpiBnI', true);
     console.log('App Check ativado');
   } catch (e) {
     console.warn('Erro ao ativar App Check:', e);
