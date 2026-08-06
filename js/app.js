@@ -12,7 +12,7 @@ firebase.initializeApp(firebaseConfig);
 
 // ================= APP CHECK (DESATIVADO PARA TESTE) =================
 // Para ativar, descomente o bloco abaixo e substitua 'SUA_SITE_KEY' pela sua Site Key
-/*
+
 if (typeof firebase.appCheck !== 'undefined') {
   try {
     const appCheck = firebase.appCheck();
@@ -22,7 +22,7 @@ if (typeof firebase.appCheck !== 'undefined') {
     console.warn('Erro ao ativar App Check:', e);
   }
 }
-*/
+
 
 const db = firebase.firestore();
 
