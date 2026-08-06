@@ -22,8 +22,6 @@ if (typeof firebase.appCheck !== 'undefined') {
     console.warn('Erro ao ativar App Check:', e);
   }
 }
-
-
 const db = firebase.firestore();
 
 // ================= VARIÁVEIS GLOBAIS =================
