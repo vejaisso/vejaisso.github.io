@@ -1,4 +1,3 @@
-// ================= CONFIGURAÇÃO DO FIREBASE =================
 const firebaseConfig = {
   apiKey: "AIzaSyD3JXXQrzqessm7zGL6Ipa0Le75XNN2QjM",
   authDomain: "disciplinas-7e838.firebaseapp.com",
@@ -9,12 +8,6 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
-// ================= APP CHECK =================
-// Se estiver testando em localhost, gere um debug token no console do Firebase
-// (App Check > Apps > seu app > "Manage debug tokens") e descomente a linha abaixo,
-// colando o token gerado. Sem isso, o App Check vai bloquear o localhost.
-// self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
 
 if (typeof firebase.appCheck !== 'undefined') {
   try {
@@ -29,7 +22,6 @@ if (typeof firebase.appCheck !== 'undefined') {
 
 const db = firebase.firestore();
 
-// ================= VARIÁVEIS GLOBAIS =================
 let disciplinesMap = {};
 let currentDisciplineId = null;
 let highlightActive = false;
@@ -129,7 +121,6 @@ function toggleAriaHighlight() {
 }
 document.getElementById('toggleAriaHighlight').addEventListener('click', toggleAriaHighlight);
 
-// ================= FUNÇÕES AUXILIARES =================
 function escapeHtml(str) {
   if (!str) return '';
   return String(str).replace(/[&<>"']/g, m => ({
@@ -156,7 +147,6 @@ function focusFirstLessonButton() {
   }, 100);
 }
 
-// ================= RENDERIZAÇÃO =================
 async function renderHome() {
   currentDisciplineId = null;
   setActiveButton(null);
